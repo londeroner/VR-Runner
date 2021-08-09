@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16918
+  m_Name: pb_Mesh18104
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -764,6 +764,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1071386659}
   - component: {fileID: 1071386658}
+  - component: {fileID: 1071386660}
   m_Layer: 0
   m_Name: VR Rig
   m_TagString: Untagged
@@ -805,6 +806,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1071386660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071386657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78a4c812bd8ee934bb0a7a31520da002, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 0.8
+  delta_x: 0.05
+  camera_object: {fileID: 1112128232}
 --- !u!1 &1112128232
 GameObject:
   m_ObjectHideFlags: 0

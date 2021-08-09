@@ -4,7 +4,7 @@ using UnityEngine;
 public class RoadGenerator : MonoBehaviour
 {
     public GameObject RoadPrefab;
-    private List<GameObject> roadElements = new List<GameObject>();
+    private LinkedList<GameObject> roadElements = new LinkedList<GameObject>();
 
     public float startSpeed = 10f;
     public float speedMultiplayer = 0.0000001f;
@@ -18,19 +18,20 @@ public class RoadGenerator : MonoBehaviour
         StartLevel();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (speed == 0) return;   
+        if (speed == 0) return;
 
         foreach (var element in roadElements)
         {
-            element.transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
+            element.transform.position -= new Vector3(0, 0, speed * Time.fixedDeltaTime);
         }
 
-        if (roadElements[0].transform.position.z < -15)
+        GameObject currElem = roadElements.First.Value;
+        if (currElem.transform.position.z < -15)
         {
-            Destroy(roadElements[0]);
-            roadElements.RemoveAt(0);
+            Destroy(currElem);
+            roadElements.RemoveFirst();
 
             CreateNextRoad();
         }
@@ -50,8 +51,8 @@ public class RoadGenerator : MonoBehaviour
 
         while (roadElements.Count > 0)
         {
-            Destroy(roadElements[0]);
-            roadElements.RemoveAt(0);
+            Destroy(roadElements.First.Value);
+            roadElements.RemoveFirst();
         }
 
         for (int i = 0; i < maxRoadCount; i++)
@@ -65,11 +66,12 @@ public class RoadGenerator : MonoBehaviour
         Vector3 pos = Vector3.zero;
 
         if (roadElements.Count > 0)
-            pos = roadElements[roadElements.Count - 1].transform.position 
-                + new Vector3(0,0, RoadPrefab.GetComponent<BoxCollider>().size.z * RoadPrefab.transform.localScale.z);
-
+        {
+            GameObject lastElement = roadElements.Last.Value;
+            pos = lastElement.transform.position + new Vector3(0, 0, RoadPrefab.GetComponent<BoxCollider>().size.z * RoadPrefab.transform.localScale.z);
+        }
         GameObject go = Instantiate(RoadPrefab, pos, Quaternion.identity);
         go.transform.SetParent(transform);
-        roadElements.Add(go);
+        roadElements.AddLast(go);
     }
 }
