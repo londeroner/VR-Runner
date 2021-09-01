@@ -27,7 +27,7 @@ public class KeyBoardManipulation : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.LogError(delta_x);
+        //Debug.LogError(delta_x);
 
         if (Input.GetKey(KeyCode.A))
         {
