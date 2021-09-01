@@ -1,12 +1,17 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public static class Math
 {
-    public static int GetElementIndexByWeight(List<int> weights)
+    public static int GetElementIndexByWeight(IReadOnlyList<int> weights)
     {
-        int randomNumber = Random.Range(0, weights.Sum() + 1);
+        int wSum = 0;
+        for (int i = 0; i < weights.Count; i++)
+        {
+            wSum += weights[i];
+        }    
+
+        int randomNumber = Random.Range(0, wSum + 1);
 
         int indexOf = -1;
         int currentWeight = 0;

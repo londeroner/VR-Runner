@@ -507,10 +507,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoadPrefabs:
-  - RoadPrefab: {fileID: 545124577482314618, guid: 088719dab7fe67f4f9b4af2a0269f9a7, type: 3}
+  - Road: {fileID: 545124577482314618, guid: 088719dab7fe67f4f9b4af2a0269f9a7, type: 3}
     Weight: 1
+  distanceThreshold: 15
   startSpeed: 1
-  speedMultiplayer: 0.05
+  speedStep: 0.005
   maxRoadCount: 100
 --- !u!4 &1159057481
 Transform:

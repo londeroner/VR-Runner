@@ -9,8 +9,23 @@ public class RoadComponent : MonoBehaviour
 
     void Start()
     {
-        int roadIndex = Math.GetElementIndexByWeight(RoadComponents.Select(p => p.Weight).ToList());
+        int[] weights = new int[RoadComponents.Count];
+        for (int i = 0; i < RoadComponents.Count; i++)
+        {
+            weights[i] = RoadComponents[i].Weight;
+        }
+
+        int roadIndex = Math.GetElementIndexByWeight(weights);
 
         RoadComponents[roadIndex].Road.SetActive(true);
+    }
+
+
+    private void OnDestroy()
+    {
+        foreach (RoadElement element in RoadComponents)
+        {
+            Destroy(element.Road);
+        }
     }
 }
