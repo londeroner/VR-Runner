@@ -58,6 +58,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\KeyBoardManipulation.cs" />
     <Compile Include="Assets\Scripts\RoadGenerator.cs" />
+    <Compile Include="Assets\Scripts\Math.cs" />
+    <Compile Include="Assets\Scripts\RoadComponent.cs" />
+    <Compile Include="Assets\Scripts\RoadElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
