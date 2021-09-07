@@ -29,9 +29,19 @@ public class RoadGenerator : MonoBehaviour
         }
 
         GameObject currElem = roadElements.First.Value;
-        if (currElem.transform.position.z < -15)
+
+        int counter = 0;
+        foreach(var roadelement in roadElements)
         {
-            Destroy(currElem);
+            if (roadelement.transform.position.z < - 15)
+            {
+                counter++;
+            }
+        }
+
+        for (int i = 0; i < counter; i++)
+        {
+            Destroy(roadElements.First.Value);
             roadElements.RemoveFirst();
 
             CreateNextRoad();
@@ -97,7 +107,7 @@ public class RoadGenerator : MonoBehaviour
                 new Vector3(0,0,0),
                 Quaternion.identity);
         }
-
+        go.name = "roadelement";
         go.transform.SetParent(transform);
         roadElements.AddLast(go);
     }
