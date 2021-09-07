@@ -39,7 +39,8 @@ public class RoadGenerator : MonoBehaviour
             CreateNextRoad();
         }
 
-        currentSpeed += speedStep;
+        PlayerStats.instance.MetersCovered += currentSpeed * Time.fixedDeltaTime;
+        currentSpeed += speedStep * Time.fixedDeltaTime;
 
         fixedUpdateCounter++;
     }
