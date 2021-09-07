@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class RoadGenerator : MonoBehaviour
@@ -7,9 +6,11 @@ public class RoadGenerator : MonoBehaviour
     public List<RoadElement> RoadPrefabs;
     private LinkedList<GameObject> roadElements = new LinkedList<GameObject>();
 
+    public float distanceThreshold = 15;
     public float startSpeed = 1f;
-    public float speedMultiplayer = 0.0000001f;
-    private float speed = 0;
+    public float speedStep = 0.001f;
+    private float currentSpeed = 0;
+    private uint fixedUpdateCounter = 0;
 
     public int maxRoadCount = 100;
 
@@ -21,25 +22,16 @@ public class RoadGenerator : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (speed == 0) return;
+        if (currentSpeed == 0) return;
 
+        
         foreach (var element in roadElements)
         {
-            element.transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
+            element.transform.position -= new Vector3(0, 0, currentSpeed * Time.fixedDeltaTime);
         }
 
         GameObject currElem = roadElements.First.Value;
-
-        int counter = 0;
-        foreach(var roadelement in roadElements)
-        {
-            if (roadelement.transform.position.z < - 15)
-            {
-                counter++;
-            }
-        }
-
-        for (int i = 0; i < counter; i++)
+        if (currElem.transform.position.z < -distanceThreshold)
         {
             Destroy(roadElements.First.Value);
             roadElements.RemoveFirst();
@@ -47,17 +39,20 @@ public class RoadGenerator : MonoBehaviour
             CreateNextRoad();
         }
 
-        speed += speed * speedMultiplayer * Time.deltaTime;
+        PlayerStats.instance.MetersCovered += currentSpeed * Time.fixedDeltaTime;
+        currentSpeed += speedStep * Time.fixedDeltaTime;
+
+        fixedUpdateCounter++;
     }
 
     void StartLevel()
     {
-        speed = startSpeed;
+        currentSpeed = startSpeed;
     }
 
     void ResetLevel()
     {
-        speed = 0;
+        currentSpeed = 0;
 
         while (roadElements.Count > 0)
         {
@@ -76,10 +71,15 @@ public class RoadGenerator : MonoBehaviour
     {
         Vector3 pos = Vector3.zero;
 
-        int roadIndex = Math.GetElementIndexByWeight(RoadPrefabs.Select(p => p.Weight).ToList());
+        int[] weights = new int[RoadPrefabs.Count];
+        for (int i = 0; i < RoadPrefabs.Count; i++)
+        {
+            weights[i] = RoadPrefabs[i].Weight;
+        }
+        int roadIndex = Math.GetElementIndexByWeight(weights);
 
-        GameObject go = new GameObject();
 
+        GameObject go = null;
         if (roadElements.Count > 0)
         {
             foreach (Transform child in roadElements.Last.Value.transform)
@@ -104,11 +104,14 @@ public class RoadGenerator : MonoBehaviour
         {
             go = Instantiate(
                 RoadPrefabs[roadIndex].Road,
-                new Vector3(0,0,0),
+                new Vector3(0, 0, 0),
                 Quaternion.identity);
         }
-        go.name = "roadelement";
-        go.transform.SetParent(transform);
-        roadElements.AddLast(go);
+
+        if (go != null)
+        {
+            go.transform.SetParent(transform);
+            roadElements.AddLast(go);
+        }
     }
 }

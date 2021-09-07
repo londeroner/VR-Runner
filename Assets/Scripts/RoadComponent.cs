@@ -24,4 +24,13 @@ public class RoadComponent : MonoBehaviour
             }
         }
     }
+
+
+    private void OnDestroy()
+    {
+        foreach (RoadElement element in RoadComponents)
+        {
+            Destroy(element.Road);
+        }
+    }
 }
