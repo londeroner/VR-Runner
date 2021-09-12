@@ -1,11 +1,7 @@
-using UnityEngine;
+using Assets.Scripts;
 
 [System.Serializable]
-public class RoadElement
+public class RoadElement : RoadObjectBase
 {
-    public GameObject Road;
-
-    public int Weight;
-
-    public bool Rotateble = false;
+    public float Length = 0;
 }

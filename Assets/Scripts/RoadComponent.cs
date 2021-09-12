@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public class RoadComponent : MonoBehaviour
 {
-    public List<RoadElement> RoadComponents;
+    public List<RoadDecorator> RoadComponents;
 
     void Start()
     {
@@ -13,14 +14,14 @@ public class RoadComponent : MonoBehaviour
         {
             int roadIndex = Math.GetElementIndexByWeight(RoadComponents.Select(p => p.Weight).ToList());
 
-            RoadComponents[roadIndex].Road.SetActive(true);
+            RoadComponents[roadIndex].ContentObject.SetActive(true);
 
             if (RoadComponents[roadIndex].Rotateble)
             {
-                RoadComponents[roadIndex].Road.transform.rotation = Quaternion.Euler(
-                    RoadComponents[roadIndex].Road.transform.rotation.x,
+                RoadComponents[roadIndex].ContentObject.transform.rotation = Quaternion.Euler(
+                    RoadComponents[roadIndex].ContentObject.transform.rotation.x,
                     Random.Range(0, 360),
-                    RoadComponents[roadIndex].Road.transform.rotation.z);
+                    RoadComponents[roadIndex].ContentObject.transform.rotation.z);
             }
         }
     }
@@ -28,9 +29,9 @@ public class RoadComponent : MonoBehaviour
 
     private void OnDestroy()
     {
-        foreach (RoadElement element in RoadComponents)
+        foreach (RoadDecorator element in RoadComponents)
         {
-            Destroy(element.Road);
+            Destroy(element.ContentObject);
         }
     }
 }

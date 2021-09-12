@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -92,7 +93,7 @@ public class RoadGenerator : MonoBehaviour
                         {
                             //Debug.Log(child2.position);
                             go = Instantiate(
-                                RoadPrefabs[roadIndex].Road,
+                                RoadPrefabs[roadIndex].ContentObject,
                                 child2.position,
                                 Quaternion.identity);
                         }
@@ -103,7 +104,7 @@ public class RoadGenerator : MonoBehaviour
         else
         {
             go = Instantiate(
-                RoadPrefabs[roadIndex].Road,
+                RoadPrefabs[roadIndex].ContentObject,
                 new Vector3(0, 0, 0),
                 Quaternion.identity);
         }

@@ -798,8 +798,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoadPrefabs:
-  - Road: {fileID: 545124577482314618, guid: 088719dab7fe67f4f9b4af2a0269f9a7, type: 3}
+  - ContentObject: {fileID: 545124577482314618, guid: 088719dab7fe67f4f9b4af2a0269f9a7, type: 3}
     Weight: 1
+    Rotateble: 0
+    Length: 0
   distanceThreshold: 15
   startSpeed: 2
   speedStep: 0.1
